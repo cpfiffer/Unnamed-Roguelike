@@ -10,74 +10,29 @@ entity::entity() {
     myChar = 'D';
     myColor = TCODColor::blue;
 
-    next = NULL;
+    nextEntity = NULL;
+    firstEntity = NULL;
 }
 
-entity::~entity() {
+stats::stats()
+{
+	//basic stats and stuff
+	int str=0;
+	int con=0;
+	int intel=0;
+	int foc=0;
+	int dex=0;
+	//these are the skills
+	int science=0;
+	int guns=0;
+	int fisticuffs=0;
+	int sticks=0;
+	int driving=0;
 }
+// *entity::insertNew() {
+    //entity *newEnt;
+    //return newEnt;
+//}
 
-entityList::entityList() {
-    size=0;
-    head = NULL;
-}
-
-entityList::~entityList() {
-    /*entity *cur = head;
-    entity *nextNode = head->next;
- 
-    while (cur != NULL) {
-        nextNode = cur->next;
-        delete cur;
-        cur = nextNode;
-    }*/
-}
-
-entity *entityList::insert() {
-    entity *newEntity = new entity;
-
-    if (head == NULL) {
-        head = newEntity;
-        newEntity->next = NULL;
-        return newEntity;
-    } else { 
-        entity *nextEntity = head;
-        while(nextEntity != NULL) {
-            // If we are at the end of the list:
-            if (nextEntity->next == NULL) {
-                // Make the old end point to the new end:
-                nextEntity->next = newEntity;
-                // Make sure the new end is NULL
-                newEntity->next = NULL;
-                return newEntity;
-            } else {
-                nextEntity = nextEntity->next;
-            }
-        }
-    }
-    return 0;
-
-}
-
-void entityList::remove(entity *removeMe) {
-    entity *prev = NULL;
-    entity *current = head;
-
-    entity *old;
-    while (current != NULL) {
-        if (current == removeMe) {
-            if (prev == NULL) {
-                // If previous is NULL, we're removing the head 
-                // of the linked list.
-                old = head;
-                head = head->next;
-                delete old;
-            } else {
-                prev->next = current->next;
-                delete current;
-            }
-        } else {
-            prev = current;
-            current = current->next;
-        }
-    }
+void entity::deleteOld(entity *oldEnt) {
 }

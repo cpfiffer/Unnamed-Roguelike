@@ -38,11 +38,10 @@ mapData::mapData() {
     changed = false;
     loaded = true;
 
-    masterList = new entityList;
+    entityList = NULL;
 }
 
 mapData::~mapData() {
-    delete masterList;
 }
 
 // END CONSTRUCTORS AND CLASS FUNCTIONS
@@ -50,8 +49,14 @@ mapData::~mapData() {
 void render(cPlayer *mainPlayer) {
     // Shorten this shit up a bit:
     mapData *mpShort = mainPlayer->mapDataHandle;
+    entity *mpEList = mpShort->entityList;
 
     TCODConsole *offscreenConsole = new TCODConsole(SCREEN_WIDTH,SCREEN_HEIGHT);
+
+	TCODConsole *testScreen = new TCODConsole(SCREEN_WIDTH,SCREEN_HEIGHT);
+	testScreen->setBackgroundColor(TCODColor::grey);
+	testScreen->clear();
+
     offscreenConsole->setBackgroundColor(TCODColor::black);
     offscreenConsole->clear(); // Flush the new changes to the offscreen console
 
@@ -71,13 +76,18 @@ void render(cPlayer *mainPlayer) {
     }
 
     // Entity renderer:
-    entity *loop = mainPlayer->mapDataHandle->masterList->head;
-    while (loop != NULL) {
+    while (mpEList != NULL) {
         // We have entities to render:
-        offscreenConsole->setFore(loop->pos[0], loop->pos[1], loop->myColor);
-        offscreenConsole->setChar(loop->pos[0], loop->pos[1], loop->myChar);
+        offscreenConsole->setFore(mpEList->pos[0], mpEList->pos[1], mpEList->myColor);
+        offscreenConsole->setChar(mpEList->pos[0], mpEList->pos[1], mpEList->myChar);
         
-        loop = loop->next;
+        if (mpEList->nextEntity != NULL) // If we are not at the end of the list
+            mpEList = mpEList->nextEntity;
+        else {
+            // Go back to the beginning of the list:
+            mpEList = mpEList->firstEntity;
+            break;
+        }
     }
     
     // Render the player last
@@ -85,21 +95,17 @@ void render(cPlayer *mainPlayer) {
     offscreenConsole->setChar(mainPlayer->pos[0], mainPlayer->pos[1], '@');
 
     // Blit all that crap on-screen
-    TCODConsole::blit(offscreenConsole,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,TCODConsole::root,0,0, 1.0f, 1.0f);
+	TCODConsole::blit(testScreen, 1,1,SCREEN_WIDTH-2,SCREEN_HEIGHT-2,offscreenConsole,1,1, 1.0f, 0.5f);
+   
+	TCODConsole::blit(offscreenConsole,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,TCODConsole::root,0,0, 1.0f, 1.0f);
 
     // Flip it
     TCODConsole::flush();
-
-    delete offscreenConsole;
 }
 
 int main() {
     srand((int)time(NULL));
     cPlayer *mainPlayer = new cPlayer;
-    entity *test = mainPlayer->mapDataHandle->masterList->insert();
-    if (test == NULL) {
-        return 1;
-    }
 
     TCODConsole::initRoot(SCREEN_WIDTH, SCREEN_HEIGHT, "DAT ROGUEISH", false, TCOD_RENDERER_SDL);
 

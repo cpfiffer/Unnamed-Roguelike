@@ -1,7 +1,23 @@
 #pragma once
 #include "main.h"
-
-class entity {
+class stats
+{
+public:
+	stats();
+	//basic stats and stuff
+	int str;
+	int con;
+	int intel;
+	int foc;
+	int dex;
+	//these are the skills
+	int science;
+	int guns;
+	int fisticuffs;
+	int sticks;
+	int driving;
+};
+class entity:stats {
 public:
     entity();
     ~entity();
@@ -11,20 +27,9 @@ public:
     char myChar;
     TCODColor myColor;
 
-    entity *next;
-};
+    entity *nextEntity; // Linked list of entities
+    entity *firstEntity;
 
-class entityList {
-public:
-    entityList();
-    ~entityList();
-
-    entity *head;
-
-    int size;
-
-    // Returns a pointer to a fresh entity
-    entity *insert();
-    // Pass this function an entity
-    void remove(entity *removeMe);
+    entity *insertNew();
+    void deleteOld(entity *oldEnt);
 };

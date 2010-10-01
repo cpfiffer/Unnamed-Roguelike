@@ -15,7 +15,6 @@ typedef char mapArray[80][50];
 // CLASSES
 class mapData;
 class entity;
-class entityList;
 
 class cPlayer {
 public:
@@ -38,7 +37,8 @@ public:
     bool loaded;
     // Master array of the map
     mapArray mapHandlerMaster;
-    entityList *masterList;
+    // Master linked list for entities
+    entity *entityList;
 };
 
 // GLOBAL FUNCS (Why so C?)
