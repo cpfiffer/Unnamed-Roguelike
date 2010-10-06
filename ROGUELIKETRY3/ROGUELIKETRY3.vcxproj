@@ -39,8 +39,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\quinlan\Downloads\libtcod\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\quinlan\Downloads\libtcod\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\quinlan\Downloads\libtcod\include;C:\Users\Cameron\Documents\Visual Studio 2010\libtcod-1.5.1-MSVC\libtcod-1.5.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\quinlan\Downloads\libtcod\lib;C:\Users\Cameron\Documents\Visual Studio 2010\libtcod-1.5.1-MSVC\libtcod-1.5.1\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\Output</OutDir>
+    <IntDir>..\Output</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

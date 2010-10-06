@@ -1,5 +1,6 @@
 #pragma once
 #include "main.h"
+
 class stats
 {
 public:
@@ -16,20 +17,38 @@ public:
 	int fisticuffs;
 	int sticks;
 	int driving;
+	//health, mind, body
+	int health;
+	int mind;
+	int body;
+	//hidden stats
+	int dodgeValue;
 };
+
 class entity:stats {
 public:
     entity();
-    ~entity();
+    //~entity();
 
     int pos[2];
     int size[2]; // Like if you wanted cars or something (2x2 bricks)
     char myChar;
     TCODColor myColor;
 
-    entity *nextEntity; // Linked list of entities
-    entity *firstEntity;
+    entity *next;
+};
 
-    entity *insertNew();
-    void deleteOld(entity *oldEnt);
+class entityList {
+public:
+    entityList();
+    //~entityList();
+
+    entity *head;
+
+    int size;
+
+    // Returns a pointer to a fresh entity
+    entity *insert();
+    // Pass this function an entity
+    void remove(entity *removeMe);
 };
